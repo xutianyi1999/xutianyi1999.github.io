@@ -46,7 +46,7 @@
 			<img src="" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/">Tianyi Xu</a></h1>
 		</hgroup>
 		
 
@@ -104,7 +104,7 @@
 				<img src="" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Tianyi Xu</h1>
 			</hgroup>
 			
 			
@@ -152,35 +152,49 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-springMVC注解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/11/hello-world/">Hello World</a>
+      <a class="article-title" href="/2018/09/12/springMVC注解/">springMVC注解</a>
     </h1>
   
 
         
-        <a href="/2018/09/11/hello-world/" class="archive-article-date">
-  	<time datetime="2018-09-11T08:05:07.929Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-11</time>
+        <a href="/2018/09/12/springMVC注解/" class="archive-article-date">
+  	<time datetime="2018-09-12T01:21:48.013Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <ul>
+<li><h2 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a>@Controller</h2><p>  Controller 负责处理DispatcherServlet分发的请求</p>
+<p>  使用 <strong>@Controller</strong> 注解标注一个类是Controller,然后使用 <strong>@RequestMapping</strong> 和 <strong>@RequestParam</strong> 等一些注解用以定义URL 请求和Controller 方法之间的映射，这样的Controller 就能被外界访问到</p>
+<p>  以下先定义一个简单的Controller ：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span> ( <span class="string">"/showView"</span> )</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">showView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ModelAndView modelAndView = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">    modelAndView.setViewName( <span class="string">"viewName"</span> );</span><br><span class="line">    modelAndView.addObject( <span class="string">" 需要放到 model 中的属性名称 "</span> , <span class="string">" 对应的属性值，它是一个对象 "</span> );</span><br><span class="line">    <span class="keyword">return</span> modelAndView;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  在上面示例中，<strong>@Controller</strong> 是标记在类MyController上面的，所以类MyController 就是一个SpringMVC Controller 对象了</p>
+<p>  然后使用 <strong>@RequestMapping(“/showView”)</strong> 标记在Controller 方法上，表示当请求  <strong>/showView.do</strong> 的时候访问的是MyController 的showView 方法</p>
+</li>
+<li><h2 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h2><p>  可以使用 <strong>@RequestMapping</strong> 来映射URL 到控制器类，或者是到Controller 控制器的处理方法上。当 <strong>@RequestMapping</strong> 标记在Controller 类上的时候，里面使用 <strong>@RequestMapping</strong> 标记的方法的请求地址都是相对于类上的 <strong>@RequestMapping</strong> 而言的</p>
+<p>  当Controller 类上没有标记 <strong>@RequestMapping</strong> 注解时，方法上的 <strong>@RequestMapping</strong> 都是绝对路径。这种绝对路径和相对路径所组合成的最终路径都是相对于根路径 <strong>“/ ”</strong> 而言的。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span> ( <span class="string">"/showView"</span> )</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">showView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ModelAndView modelAndView = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">    modelAndView.setViewName( <span class="string">"viewName"</span> );</span><br><span class="line">    modelAndView.addObject( <span class="string">" 需要放到 model 中的属性名称 "</span> , <span class="string">" 对应的属性值，它是一个对象 "</span> );</span><br><span class="line">    <span class="keyword">return</span> modelAndView;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  在这个控制器中，因为MyController 没有被 <strong>@RequestMapping</strong> 标记，所以当需要访问到里面使用了 <strong>@RequestMapping</strong> 标记的showView 方法时，就是使用的绝对路径 <strong>/showView.do</strong> 请求就可以了。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping</span> ( <span class="string">"/test"</span> )</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span> ( <span class="string">"/showView"</span> )</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">showView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ModelAndView modelAndView = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">    modelAndView.setViewName( <span class="string">"viewName"</span> );</span><br><span class="line">    modelAndView.addObject( <span class="string">" 需要放到 model 中的属性名称 "</span> , <span class="string">" 对应的属性值，它是一个对象 "</span> );</span><br><span class="line">    <span class="keyword">return</span> modelAndView;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  这种情况是在控制器上加了 <strong>@RequestMapping</strong> 注解，所以当需要访问到里面使用了 <strong>@RequestMapping</strong> 标记的方法showView() 的时候就需要使用showView 方法上 <strong>@RequestMapping</strong> 相对于控制器MyController 上 <strong>@RequestMapping</strong> 的地址，即<br>   <strong>/test/showView.do</strong> 。</p>
+</li>
+<li><h2 id="RequestParam"><a href="#RequestParam" class="headerlink" title="@RequestParam"></a>@RequestParam</h2>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span> ( <span class="string">"/requestParam"</span> )</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testRequestParam</span><span class="params">( @RequestParam(required=<span class="keyword">false</span>)</span> String name, @<span class="title">RequestParam</span> <span class="params">( <span class="string">"age"</span> )</span> <span class="keyword">int</span> age) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"requestParam"</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  在上面代码中利用 <strong>RequestParam</strong> 从HttpServletRequest 中绑定了参数name 到控制器方法参数name ，绑定了参数age 到控制器方法参数age</p>
+<p>  当你没有明确指定从request 中取哪个参数时，Spring 在代码是debug 编译的情况下会默认取跟方法参数同名的参数。</p>
+<p>  当需要从request 中绑定的参数和方法的参数名不相同的时候，也需要在 <strong>@RequestParam</strong> 中明确指出是要绑定哪个参数。</p>
+<p>  在上面的代码中如果我访问/requestParam.do?name=hello&amp;age=1 则Spring 将会把request 请求参数name 的值hello 赋给对应的处理方法参数name ，把参数age 的值1 赋给对应的处理方法参数age </p>
+<p>  在 <strong>@RequestParam</strong> 中除了指定绑定哪个参数的属性value 之外，还有一个属性required ，它表示所指定的参数是否必须在request 属性中存在，默认是true </p>
+</li>
+</ul>
 
       
 
@@ -193,7 +207,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/11/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/09/12/springMVC注解/">展开全文 >></a>
         </p>
       
 
@@ -233,7 +247,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 John Doe
+    		&copy; 2018 Tianyi Xu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
