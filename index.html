@@ -194,6 +194,41 @@
 <p>  在上面的代码中如果我访问/requestParam.do?name=hello&amp;age=1 则Spring 将会把request 请求参数name 的值hello 赋给对应的处理方法参数name ，把参数age 的值1 赋给对应的处理方法参数age </p>
 <p>  在 <strong>@RequestParam</strong> 中除了指定绑定哪个参数的属性value 之外，还有一个属性required ，它表示所指定的参数是否必须在request 属性中存在，默认是true </p>
 </li>
+<li><h2 id="CookieValue"><a href="#CookieValue" class="headerlink" title="@CookieValue"></a>@CookieValue</h2>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span> ( <span class="string">"cookieValue"</span> )</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testCookieValue</span><span class="params">( @CookieValue ( <span class="string">"hello"</span> )</span> String cookieValue, @CookieValue String hello) </span>&#123;</span><br><span class="line">   System. out .println(cookieValue + <span class="string">"-----------"</span> + hello);</span><br><span class="line">   <span class="keyword">return</span> <span class="string">"cookieValue"</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  上面的代码中使用 <strong>@CookieValue</strong> 绑定了cookie 的值到方法参数上。上面一共绑定了两个参数，一个是明确指定要绑定的是名称为hello 的cookie 的值，一个是没有指定。</p>
+<p>  使用没有指定的形式的规则和 <strong>@PathVariable</strong> 、<strong>@RequestParam</strong> 的规则是一样的，即在debug 编译模式下将自动获取跟方法参数名同名的cookie 值。</p>
+</li>
+<li><h2 id="RequestMapping-的一些参数"><a href="#RequestMapping-的一些参数" class="headerlink" title="@RequestMapping 的一些参数"></a>@RequestMapping 的一些参数</h2><p>  在RequestMapping 中除了指定请求路径value 属性外，还有其他的属性可以指定，如params 、method 和headers 。这样属性都可以用于缩小请求的映射范围。</p>
+<ul>
+<li><h3 id="params属性"><a href="#params属性" class="headerlink" title="params属性"></a>params属性</h3><p>  params 属性用于指定请求参数</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span> (value= <span class="string">"testParams"</span> , params=&#123; <span class="string">"param1=value1"</span> , <span class="string">"param2"</span> , <span class="string">"!param3"</span> &#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testParams</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System. out .println( <span class="string">"test Params..........."</span> );</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"testParams"</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  在上面代码中 <strong>@RequestMapping</strong> 的params属性指定了三个参数，这些参数都是针对请求参数而言的，它们分别表示参数param1 的值必须等于value1 ，参数param2 必须存在，值无所谓，参数param3 必须不存在</p>
+<p>  只有当请求 <strong>/testParams.do</strong> 并且满足指定的三个参数条件的时候才能访问到该方法。所以当请求/testParams.do?param1=value1&amp;param2=value2 的时候能够正确访问到该testParams 方法，当请求/testParams.do?param1=value1&amp;param2=value2&amp;param3=value3 的时候就不能够正常的访问到该方法，因为在@RequestMapping 的params 参数里面指定了参数param3 是不能存在的。</p>
+</li>
+<li><h3 id="method属性"><a href="#method属性" class="headerlink" title="method属性"></a>method属性</h3><p>  method 属性主要是用于限制能够访问的方法类型的。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span> (value= <span class="string">"testMethod"</span> , method=&#123;RequestMethod. GET , RequestMethod. DELETE &#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"method"</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  在上面的代码中就使用method 参数限制了以GET 或DELETE 方法请求/testMethod.do 的时候才能访问到该Controller 的testMethod 方法。</p>
+</li>
+<li><h3 id="headers属性"><a href="#headers属性" class="headerlink" title="headers属性"></a>headers属性</h3><p>  使用headers 属性可以通过请求头信息来缩小 <strong>@RequestMapping</strong> 的映射范围。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span> (value= <span class="string">"testHeaders"</span> , headers=&#123; <span class="string">"host=localhost"</span> , <span class="string">"Accept"</span> &#125;)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">testHeaders</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"headers"</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  在上面的代码中当请求/testHeaders.do 的时候只有当请求头包含Accept 信息，且请求的host 为localhost 的时候才能正确的访问到testHeaders 方法。</p>
+</li>
+</ul>
+</li>
+<li><h2 id="RequestMapping的参数类型和返回类型"><a href="#RequestMapping的参数类型和返回类型" class="headerlink" title="@RequestMapping的参数类型和返回类型"></a>@RequestMapping的参数类型和返回类型</h2><ul>
+<li><p>支持的方法参数类型</p>
+<blockquote>
+<p>（1）HttpServlet 对象，主要包括HttpServletRequest 、HttpServletResponse 和HttpSession 对象。 这些参数Spring 在调用处理器方法的时候会自动给它们赋值，所以当在处理器方法中需要使用到这些对象的时候，可以直接在方法上给定一个方法参数的申明，然后在方法体里面直接用就可以了。但是有一点需要注意的是在使用HttpSession 对象的时候，如果此时HttpSession 对象还没有建立起来的话就会有问题。</p>
+</blockquote>
+<blockquote>
+<p>（2）Spring 自己的WebRequest 对象。 使用该对象可以访问到存放在HttpServletRequest 和HttpSession 中的属性值。</p>
+</blockquote>
+<blockquote>
+<p>（3）InputStream 、OutputStream 、Reader 和Writer 。 InputStream 和Reader 是针对HttpServletRequest 而言的，可以从里面取数据；OutputStream 和Writer 是针对HttpServletResponse 而言的，可以往里面写数据。</p>
+</blockquote>
+</li>
+</ul>
+</li>
 </ul>
 
       
